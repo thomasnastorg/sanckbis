@@ -6,9 +6,14 @@
 using std::cout;
 void generationPomme(bool &object,sf::RenderWindow &window ,int &positionX, int &positionY);
 void mouveSnack(int tableauxX [100],int tableauxY [100],sf::RenderWindow &window,sf::Vector2f &postion,int suiviX ,int suiviY);
+void tpTete(sf::Vector2f &postion,sf::RectangleShape player);
+
 int main()
+
 {
+
     bool pomme = false;
+    int checkmove = 0;
     int tableauxX [100],tableauxY [100]; //le fair avec un list si je peux
     int positionX, positionY, suiviX=-50,suiviY=0;
     //-------initialisation du tableaux
@@ -27,89 +32,115 @@ int main()
     //-------
     sf::RenderWindow window( sf::VideoMode( 640, 640), "Awesome Game" );
     sf::RectangleShape player(sf::Vector2f(50.0f,50.0f)) ;
+    player.setOrigin(50 / 2, 50 / 2);
+    player.setPosition(125, 25);
     player.setFillColor(sf::Color::Black);
-    //------ corps serpent
-    sf::RectangleShape player2(sf::Vector2f(50.0f,50.0f)) ;
-    player2.setFillColor(sf::Color::Red);
-    sf::RectangleShape player3(sf::Vector2f(50.0f,50.0f)) ;
-    player3.setFillColor(sf::Color::Yellow);
+    sf::Clock Clock;
 
     while (window.isOpen())
     {
+
         sf::Event event;
         while (window.pollEvent(event))
         {
+
             if (event.type == sf::Event::Closed)
                 window.close();
+
         }
 
         window.clear();
         window.draw(sprite);
         sf::Vector2f postionFirst= player.getPosition();
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)){
-            player.move(-0.1f,-0.0f);
+            player.move(-50.0f,-0.0f);
             //mouveSnack(tableauxX, tableauxY,window,postionFirst,-50,0);
+            suiviX = 50;
+            suiviY = 0;
+            checkmove = 3;
+
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)){
-            player.move(0.1f,0.0f);
+            player.move(50.0f,0.0f);
             // mouveSnack(tableauxX, tableauxY,window,postionFirst,50,0);
+            suiviX = -50;
+            suiviY = 0;
+            checkmove = 1;
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z)){
-            player.move(0.0f,-0.1f);
+            player.move(0.0f,-50.0f);
             //mouveSnack(tableauxX, tableauxY,window,postionFirst,0,-50);
+            suiviX = 0;
+            suiviY = 50;
+            checkmove = 2;
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)){
-            player.move(0.0f,0.1f);
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) ){
+            player.move(0.0f,50.0f);
             //mouveSnack(tableauxX, tableauxY,window,postionFirst,0,50);
+            suiviX = 0;
+            suiviY = -50;
+            checkmove = 4;
         }
+        if(checkmove == 1){
+            postionFirst.x=postionFirst.x+50;
+            player.setPosition(postionFirst.x,postionFirst.y);
+        }
+        if(checkmove == 2){
+            postionFirst.y=postionFirst.y+50;
+            player.setPosition(postionFirst.x,postionFirst.y);
+        }
+        if(checkmove == 3){
+            postionFirst.y=postionFirst.y+50;
+            player.setPosition(postionFirst.x,postionFirst.y);
+        }
+        if(checkmove == 4){
+            postionFirst.x=postionFirst.x+50;
+            player.setPosition(postionFirst.x,postionFirst.y);
+        }
+        window.setFramerateLimit(8);
         generationPomme(pomme,window, positionX, positionY);
+        tpTete(postionFirst,player);
         window.draw(player);
-
-
-
-
-
-
+        mouveSnack(tableauxX,tableauxY,window, postionFirst,suiviX,suiviY);
 
 
         window.display();
+
     }
 
 
     return 0;
 }
 
-void mouveSnack(int tableauxX [100],int tableauxY [100],sf::RenderWindow &window,sf::Vector2f
-
-&postion,int suiviX ,int suiviY){
+void mouveSnack(int* tableauxX ,int* tableauxY,sf::RenderWindow &window,sf::Vector2f &postion,int suiviX ,int suiviY){
     sf::RectangleShape player2(sf::Vector2f(50.0f,50.0f)) ;
     player2.setFillColor(sf::Color::Red);
     sf::RectangleShape player3(sf::Vector2f(50.0f,50.0f)) ;
     player3.setFillColor(sf::Color::Yellow);
-    while (suiviX != 0 || suiviY != 0 ) {
-        tableauxX[0] = postion.x + suiviX;
-        tableauxY[0] = postion.y + suiviY;
+    player2.setOrigin(50 / 2, 50 / 2);
+    player3.setOrigin(50 / 2, 50 / 2);
+
+    int stablepositonX = postion.x , stablepositonY = postion.y;
 
 
-        for (int i=0; i<100; i++)
-        {
-            int tpm1,tpm2;
-            tableauxX[i+1]=tableauxX[i];
-            tableauxY[i+1]=tableauxY[i];
-            /*tpm1 = tableauxX[i+1];
-            tableauxX[i+1] = tableauxX[i];
-            tableauxX[i] =tpm1;
-            tpm2 = tableauxY[i+1];
-            tableauxY[i+1] = tableauxY[i];
-            tableauxY[i] = tpm2;
-        */
-        }
-        //player2.setPosition(tableauxX[0], tableauxX[0]);
-        //player3.setPosition(tableauxX[1], tableauxX[1]);
 
-        //window.draw(player2);
-        // window.draw(player3);
-    }
+        tableauxX[1] = tableauxX[0]  ;
+        tableauxY[1] = tableauxY[0] ;
+        tableauxX[0] = postion.x  ;
+        tableauxY[0] = postion.y;
+
+
+        stablepositonX = postion.x;
+        stablepositonY = postion.y;
+
+
+        player2.setPosition(tableauxX[0], tableauxY[0]);
+        player3.setPosition(tableauxX[1], tableauxY[1]);
+
+
+        window.draw(player2);
+         window.draw(player3);
+
 
 
 }
@@ -132,4 +163,20 @@ void generationPomme(bool &object, sf::RenderWindow &window, int &positionX, int
     }
     pomme.setPosition(positionX,positionY);
     window.draw(pomme);
+}
+
+void tpTete(sf::Vector2f &postion,sf::RectangleShape player){
+    if(postion.x > 640){
+        player.setPosition(0, postion.y);
+    } else if(postion.x < 0){
+        player.setPosition(640, postion.y);
+    } else if(postion.y > 640){
+        player.setPosition(postion.x, 0);
+    } else if(postion.y > 640){
+        player.setPosition(postion.x, 640);
+    }
+}
+
+void moveEvery(sf::Vector2f &postion,sf::RectangleShape player){
+
 }
