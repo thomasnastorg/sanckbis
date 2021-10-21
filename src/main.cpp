@@ -106,7 +106,7 @@ int main()
             player.setPosition(640, postionFirst.y);
         } else if(postionFirst.y > 640){
             player.setPosition(postionFirst.x, 0);
-        } else if(postionFirst.y > 640){
+        } else if(postionFirst.y < 0){
             player.setPosition(postionFirst.x, 640);
         }
         window.draw(player);
