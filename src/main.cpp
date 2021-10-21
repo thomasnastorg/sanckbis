@@ -13,7 +13,7 @@ int main()
 {
 
     bool pomme = false;
-    int checkmove = 0;
+    int checkmove = 1;
     int tableauxX [100],tableauxY [100]; //le fair avec un list si je peux
     int positionX, positionY, suiviX=-50,suiviY=0;
     //-------initialisation du tableaux
@@ -24,7 +24,7 @@ int main()
     // ------backgroud
     sf::Texture texture;
     sf::Texture back;
-    back.loadFromFile("/Users/thomas/SynologyDrive/snack/snackbis/images/brique.jpg");
+    back.loadFromFile("../images/brique.jpg");
     sf::Sprite sprite;
     sf::Vector2u size = texture.getSize();
     sprite.setTexture(back);
@@ -99,10 +99,19 @@ int main()
         }
         window.setFramerateLimit(8);
         generationPomme(pomme,window, positionX, positionY);
-        tpTete(postionFirst,player);
+        //tpTete(postionFirst,player);
+        if(postionFirst.x > 640){
+            player.setPosition(0, postionFirst.y);
+        } else if(postionFirst.x < 0){
+            player.setPosition(640, postionFirst.y);
+        } else if(postionFirst.y > 640){
+            player.setPosition(postionFirst.x, 0);
+        } else if(postionFirst.y > 640){
+            player.setPosition(postionFirst.x, 640);
+        }
         window.draw(player);
         mouveSnack(tableauxX,tableauxY,window, postionFirst,suiviX,suiviY);
-
+        window.draw(player);
 
         window.display();
 
@@ -117,17 +126,24 @@ void mouveSnack(int* tableauxX ,int* tableauxY,sf::RenderWindow &window,sf::Vect
     player2.setFillColor(sf::Color::Red);
     sf::RectangleShape player3(sf::Vector2f(50.0f,50.0f)) ;
     player3.setFillColor(sf::Color::Yellow);
+    sf::RectangleShape player4(sf::Vector2f(50.0f,50.0f)) ;
+    player4.setFillColor(sf::Color::Blue);
+    sf::RectangleShape player5(sf::Vector2f(50.0f,50.0f)) ;
+    player5.setFillColor(sf::Color::Blue);
     player2.setOrigin(50 / 2, 50 / 2);
     player3.setOrigin(50 / 2, 50 / 2);
-
+    player4.setOrigin(50 / 2, 50 / 2);
+    player5.setOrigin(50 / 2, 50 / 2);
     int stablepositonX = postion.x , stablepositonY = postion.y;
 
-
-
-        tableauxX[1] = tableauxX[0]  ;
-        tableauxY[1] = tableauxY[0] ;
-        tableauxX[0] = postion.x  ;
-        tableauxY[0] = postion.y;
+        tableauxX[3] = tableauxX[2]  ;
+        tableauxY[3] = tableauxY[2] ;
+        tableauxX[2] = tableauxX[1]  ;
+        tableauxY[2] = tableauxY[1] ;
+        tableauxX[1] = tableauxX[0] ;
+        tableauxY[1] = tableauxY[0]  ;
+        tableauxX[0] = postion.x+ suiviX;
+        tableauxY[0] = postion.y + suiviY;
 
 
         stablepositonX = postion.x;
@@ -136,10 +152,13 @@ void mouveSnack(int* tableauxX ,int* tableauxY,sf::RenderWindow &window,sf::Vect
 
         player2.setPosition(tableauxX[0], tableauxY[0]);
         player3.setPosition(tableauxX[1], tableauxY[1]);
-
+        player4.setPosition(tableauxX[2], tableauxY[2]);
+        player5.setPosition(tableauxX[3], tableauxY[3]);
 
         window.draw(player2);
         window.draw(player3);
+        window.draw(player4);
+        window.draw(player5);
 
 
 
