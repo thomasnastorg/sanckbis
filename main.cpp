@@ -52,7 +52,7 @@ int main()
         window.clear();
         window.draw(sprite);
         sf::Vector2f postionFirst= player.getPosition();
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)){
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)&& checkmove != 1){
             player.move(-50.0f,-0.0f);
             //mouveSnack(tableauxX, tableauxY,window,postionFirst,-50,0);
             suiviX = 50;
@@ -60,21 +60,21 @@ int main()
             checkmove = 3;
 
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)){
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)&& checkmove != 3){
             player.move(50.0f,0.0f);
             // mouveSnack(tableauxX, tableauxY,window,postionFirst,50,0);
             suiviX = -50;
             suiviY = 0;
             checkmove = 1;
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z)){
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Z)&& checkmove != 4){
             player.move(0.0f,-50.0f);
             //mouveSnack(tableauxX, tableauxY,window,postionFirst,0,-50);
             suiviX = 0;
             suiviY = 50;
             checkmove = 2;
         }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) ){
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)&& checkmove != 2 ){
             player.move(0.0f,50.0f);
             //mouveSnack(tableauxX, tableauxY,window,postionFirst,0,50);
             suiviX = 0;
@@ -86,15 +86,15 @@ int main()
             player.setPosition(postionFirst.x,postionFirst.y);
         }
         if(checkmove == 2){
-            postionFirst.y=postionFirst.y+50;
+            postionFirst.y=postionFirst.y-50;
             player.setPosition(postionFirst.x,postionFirst.y);
         }
         if(checkmove == 3){
-            postionFirst.y=postionFirst.y+50;
+            postionFirst.x=postionFirst.x - 50;
             player.setPosition(postionFirst.x,postionFirst.y);
         }
         if(checkmove == 4){
-            postionFirst.x=postionFirst.x+50;
+            postionFirst.y=postionFirst.y +50;
             player.setPosition(postionFirst.x,postionFirst.y);
         }
         window.setFramerateLimit(8);
@@ -139,7 +139,7 @@ void mouveSnack(int* tableauxX ,int* tableauxY,sf::RenderWindow &window,sf::Vect
 
 
         window.draw(player2);
-         window.draw(player3);
+        window.draw(player3);
 
 
 
@@ -175,8 +175,4 @@ void tpTete(sf::Vector2f &postion,sf::RectangleShape player){
     } else if(postion.y > 640){
         player.setPosition(postion.x, 640);
     }
-}
-
-void moveEvery(sf::Vector2f &postion,sf::RectangleShape player){
-
 }
