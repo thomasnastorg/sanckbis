@@ -9,7 +9,7 @@ include_directories(/usr/local/include)
 
 find_package(SFML 2.5 COMPONENTS system window graphics network audio REQUIRED)
 include_directories(${SFML_INCLUDE_DIRS})
-target_link_libraries(untitled5 sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
+target_link_libraries(untitled5 sfml-graphics sfml-audio sfml-window sfml-system sfml-network)
 
 
 

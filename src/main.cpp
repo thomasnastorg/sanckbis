@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+#include <SFML/Audio.hpp>
 #include <ostream>
 #include <iostream>
 #include <random>
@@ -79,6 +80,22 @@ int main()
     sf:: RectangleShape apple(sf::Vector2f(Size,Size));
     apple.setFillColor(sf::Color::Yellow);
 
+    sf::Texture texture;
+    sf::Texture back;
+    back.loadFromFile("../images/retro.jpg");
+    sf::Sprite sprite;
+    sf::Vector2u size = texture.getSize();
+    sprite.setTexture(back);
+    sprite.setOrigin(size.x / 2, size.y / 2);
+
+    sf::SoundBuffer buffer;
+    buffer.loadFromFile("../song/BlueNavi-Starcade.wav");
+
+    sf::Sound sound_menu;
+    sound_menu.setBuffer(buffer);
+    sound_menu.setVolume(50.f);
+    sound_menu.play();
+
     while (window.isOpen())
     {
 
@@ -86,6 +103,7 @@ int main()
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
+
                 window.close();
         }
 
@@ -93,7 +111,7 @@ int main()
 
         int suiviX = 0;
         int suiviY = 0;
-
+        window.draw(sprite);
         window.clear();
         sf::Vector2f postionFirst= player.getPosition();
 
@@ -125,23 +143,14 @@ int main()
             }
             timer.restart();
         }
-
-
-
-
-
-
-
-
-
-
-
+        window.draw(sprite);
         for ( int i = 0; i < snaketaille; i++){
 
             player.setPosition(snake[i].x*25,snake[i].y*25);
             window.draw(player);
         }
         apple.setPosition(pome.x*25,pome.y*25);
+
         window.draw(apple);
         window.display();
 
