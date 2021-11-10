@@ -4,8 +4,8 @@
 #include <ostream>
 #include <iostream>
 #include <random>
+#include "menu.h"
 using std::cout;
-void generationPomme(bool &object,sf::RenderWindow &window ,int &positionX, int &positionY);
 int Size = 20;
 int larg = 640, longueur = 640;
 int move = 1;
@@ -52,22 +52,13 @@ void  marche()
         pome.y=rand()%Size;
 
         snaketaille++;
-
     }
 }
 
-bool pomme = false;
-int checkmove = 1;
-int tableauxX [100],tableauxY [100]; //le fair avec un list si je peux
-int positionX, positionY, suiviX=-50,suiviY=0;
 //-------initialisation du tableaux
-
 
 int main()
 {
-
-    float x = 0;
-    float y = 0;
 
     sf:: Clock timer;
 
@@ -108,20 +99,12 @@ int main()
         }
 
 
-
-        int suiviX = 0;
-        int suiviY = 0;
         window.draw(sprite);
         window.clear();
-        sf::Vector2f postionFirst= player.getPosition();
-
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)&& move != 2) move = 0;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)&& move != 3) move = 1;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)&& move != 0 ) move = 2;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)&& move != 1) move = 3;
-
-
-
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)&& move != 3) move = 1;
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)&& move != 0 ) move = 2;
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)&& move != 1) move = 3;
 
         if(timer.getElapsedTime().asMilliseconds()>delai)
         {
@@ -132,7 +115,7 @@ int main()
                 {
                     if(snake[0].y == snake[i].y)
                     {
-                        window.close();
+                       window.close();
                     }
                 }
             }
@@ -153,32 +136,5 @@ int main()
 
         window.draw(apple);
         window.display();
-
     }
-
 }
-
-
-
-void generationPomme(bool &object, sf::RenderWindow &window, int &positionX, int &positionY )
-{
-
-    sf::RectangleShape pommme(sf::Vector2f(50.0f,50.0f)) ;
-    pommme.setFillColor(sf::Color::Green);
-    if(object == false)
-    {
-        sf::Vector2u size = window.getSize();
-        std::random_device rd;
-        std::default_random_engine eng(rd());
-        std::uniform_int_distribution<int> distrx(1, size.x);
-        std::uniform_int_distribution<int> distry(1, size.y);
-        cout << distrx(eng) << "; ";
-        positionX = distrx(eng);
-        positionY = distry(eng);
-        object = true;
-    }
-
-    pommme.setPosition(positionX,positionY);
-    window.draw(pommme);
-}
-
