@@ -17,7 +17,7 @@ struct snake{
 struct pomme{
     int x,y;
 }pome;
-
+// problme site du prof
 int snaketaille = 3;
 void  marche()
 {
@@ -65,19 +65,13 @@ int main()
     pome.x=rand()%Size;
     pome.y=rand()%Size;
 
-    sf::RenderWindow window( sf::VideoMode( larg, longueur), "Awesome Game" );
+    sf::RenderWindow window( sf::VideoMode( larg, longueur), "snack game" );
     sf::RectangleShape player(sf::Vector2f(Size,Size));
     player.setFillColor(sf::Color::Blue);
     sf:: RectangleShape apple(sf::Vector2f(Size,Size));
     apple.setFillColor(sf::Color::Yellow);
 
-    sf::Texture texture;
-    sf::Texture back;
-    back.loadFromFile("../images/retro.jpg");
-    sf::Sprite sprite;
-    sf::Vector2u size = texture.getSize();
-    sprite.setTexture(back);
-    sprite.setOrigin(size.x / 2, size.y / 2);
+
 
     sf::SoundBuffer buffer;
     buffer.loadFromFile("../song/BlueNavi-Starcade.wav");
@@ -90,7 +84,9 @@ int main()
     Menu menu(640, 640);
     int choixUser=0;
 
-
+    sf::Texture texture;
+    sf::Texture back;
+    sf::Sprite sprite;
     while (window.isOpen())
     {
         if(choixUser == 0){
@@ -126,15 +122,14 @@ int main()
                 sound_menu.play();
                 musiqueIsPlaying = 1;
             }
-            window.draw(sprite);
+
             window.clear();
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)&& move != 2) move = 0;
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)&& move != 3) move = 1;
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)&& move != 0 ) move = 2;
             else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)&& move != 1) move = 3;
 
-        if(timer.getElapsedTime().asMilliseconds()>delai)
-        {
+
             marche();
             for(int i = 1; i<snaketaille; i++)
             {
@@ -145,7 +140,7 @@ int main()
                        window.close();
                     }
                 }
-            }
+
 
             if (snake[0].x == Size && snake[0].y == Size)
             {
@@ -153,16 +148,34 @@ int main()
             }
             timer.restart();
         }
-        window.draw(sprite);
-        for ( int i = 0; i < snaketaille; i++){
 
-            player.setPosition(snake[i].x*25,snake[i].y*25);
-            window.draw(player);
-        }
-        apple.setPosition(pome.x*25,pome.y*25);
+            char nb = '0';
+            std::string PATH = "../images/animation_backend/retro";
+            std::string path;
+            while (nb <= '9') {
 
-        window.draw(apple);
-        window.display();
+                path = PATH;
+                path += nb;
+                nb += 1;
+                path += ".jpg";
+
+                back.loadFromFile(path);
+                sf::Vector2u size = texture.getSize();
+                sprite.setTexture(back);
+                sprite.setOrigin(size.x / 2, size.y / 2);
+                window.setFramerateLimit(30);
+                window.clear();
+                window.draw(sprite);
+                for ( int i = 0; i < snaketaille; i++){
+
+                    player.setPosition(snake[i].x*25,snake[i].y*25);
+                    window.draw(player);
+                }
+                apple.setPosition(pome.x*25,pome.y*25);
+
+                window.draw(apple);
+                window.display();
+            }
         }
     }
 }
