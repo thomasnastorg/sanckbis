@@ -1,0 +1,3 @@
+
+
+void snake(char nombreJ);
