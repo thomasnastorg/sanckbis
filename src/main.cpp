@@ -9,21 +9,55 @@
 #include "snakee.hpp"
 
 
-
 //-------initialisation du tableaux
 
 int main()
 {
+
+
+    parametre parametr = {1,20,75,0,3,1,3};
     int larg = 640;
     int longueur = 640;
     int Size = 20;
 
     sf::RenderWindow window( sf::VideoMode( larg, longueur), "Awesome Game" );
     sf:: Clock timer;
+    srand(time(NULL));
     Menu menu(640, 640);
     NbJoueur nbjoueur(640,640);
     int choixUser=0, choixUserBis=0;
+    sf::Texture texturepieget;
+    texturepieget.loadFromFile("../images/piege.png");
+    sf::Texture texturepomet;
+    texturepomet.loadFromFile("../images/Pomme.png");
+    sf::Sprite pieget;
+    pieget.setTexture(texturepieget);
+    pieget.scale(sf::Vector2f(1,1));
+    sf::Sprite pomet;
+    pomet.setTexture(texturepomet);
+    pomet.scale(sf::Vector2f(1,1));
+    sf::Color colorsnake(147,112,219);
+    sf::Color colorsnake2(100,112,219);
+    sf::RectangleShape player(sf::Vector2f(parametr.Size,parametr.Size));
+    player.setFillColor(colorsnake);
+    sf::RectangleShape player2(sf::Vector2f(parametr.Size,parametr.Size));
+    player.setFillColor(colorsnake2);
 
+    sf::Texture texture;
+    sf::Texture back;
+    back.loadFromFile("../images/retro.jpg");
+    sf::Sprite sprite;
+    sf::Vector2u size = texture.getSize();
+    sprite.setTexture(back);
+    sprite.setOrigin(size.x / 2, size.y / 2);
+
+    sf::SoundBuffer buffer;
+    buffer.loadFromFile("../song/BlueNavi-Starcade.wav");
+
+    sf::Sound sound_menu;
+    sound_menu.setBuffer(buffer);
+    sound_menu.setVolume(50.f);
+    int musiqueIsPlaying = 0;
 
     while (window.isOpen()) {
         if (choixUser == 0) {
@@ -70,10 +104,18 @@ int main()
                 if (event.type == sf::Event::Closed)
 
                     window.close();
+
+
             }
             if (choixUserBis == 1){
-                snakee(window, timer);
+                snakee(window,timer,sound_menu,sprite,back,player,player2,texture,pomet,pieget, parametr, musiqueIsPlaying);
             }
+
         }
+
     }
 }
+
+
+
+
