@@ -1,3 +1,8 @@
 
 
-void snake(char nombreJ);
+
+
+
+
+void snakee(sf::RenderWindow &window,sf:: Clock &timer );
+

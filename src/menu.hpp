@@ -2,8 +2,8 @@
 // Created by Thomas on 07/11/2021.
 //
 
-#ifndef UNTITLED5_MENU_H
-#define UNTITLED5_MENU_H
+#ifndef UNTITLED5_MENU_HPP
+#define UNTITLED5_MENU_HPP
 #include "SFML/Graphics.hpp"
 #define NB_ITEM 3
 
@@ -26,4 +26,4 @@ private :
 };
 
 
-#endif //UNTITLED5_MENU_H
+#endif //UNTITLED5_MENU_HPP

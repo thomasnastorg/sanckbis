@@ -2,7 +2,7 @@
 // Created by Thomas on 07/11/2021.
 //
 
-#include "menu.h"
+#include "menu.hpp"
 #include "SFML/Graphics.hpp"
 #include <SFML/Audio.hpp>
 
@@ -47,12 +47,6 @@ Menu::Menu()
 void Menu::draw(sf::RenderWindow &window)
 {
     int musiqueIsPlayingMenu =0;
-    /*sf::SoundBuffer buffer;
-    buffer.loadFromFile("../song/music.wav");
-
-    sf::Sound sound_menuu;
-    sound_menuu.setBuffer(buffer);
-    sound_menuu.setVolume(50.f);*/
 
 
     if(musiqueIsPlayingMenu == 0){
