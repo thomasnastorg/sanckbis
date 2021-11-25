@@ -14,7 +14,6 @@
 int main()
 {
 
-
     parametre parametr = {1,20,75,0,3,1,3};
     int larg = 640;
     int longueur = 640;
@@ -107,8 +106,8 @@ int main()
 
 
             }
-            if (choixUserBis == 1){
-                snakee(window,timer,sound_menu,sprite,back,player,player2,texture,pomet,pieget, parametr, musiqueIsPlaying);
+            if (choixUserBis > 0){
+                snakee(window,timer,sound_menu,sprite,back,player,player2,texture,pomet,pieget, parametr, musiqueIsPlaying, choixUserBis);
             }
 
         }
