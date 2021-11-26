@@ -13,7 +13,8 @@
 
 int main()
 {
-
+    pomme pome ={0,0};
+    piege pieges ={0,0};
     parametre parametr = {1,20,75,0,3,1,3};
     int larg = 640;
     int longueur = 640;
@@ -107,7 +108,7 @@ int main()
 
             }
             if (choixUserBis > 0){
-                snakee(window,timer,sound_menu,sprite,back,player,player2,texture,pomet,pieget, parametr, musiqueIsPlaying, choixUserBis);
+                snakee(window,timer,sound_menu,sprite,back,player,player2,texture,pomet,pieget, parametr,pome,pieges, musiqueIsPlaying, choixUserBis);
             }
 
         }

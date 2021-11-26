@@ -11,8 +11,15 @@ typedef struct parametre{
     int snaketaille;
 } parametre;
 
+typedef struct pomme{
+    int x,y;
+} pomme;
+typedef struct piege {
+    int x,y;
+} piege;
 
-void snakee(sf::RenderWindow &window,sf:: Clock &timer,sf::Sound &sound_menu,sf::Sprite &sprite,sf::Texture &back,sf::RectangleShape &player, sf::RectangleShape &player2,sf::Texture &texture,sf::Sprite &pomet,sf::Sprite &pieget,parametre &parametr, int &musiqueIsPlaying,int NbJoueur);
-void mache(parametre &parametr);
+
+void snakee(sf::RenderWindow &window,sf:: Clock &timer,sf::Sound &sound_menu,sf::Sprite &sprite,sf::Texture &back,sf::RectangleShape &player, sf::RectangleShape &player2,sf::Texture &texture,sf::Sprite &pomet,sf::Sprite &pieget,parametre &parametr,pomme &pomme,piege &piege, int &musiqueIsPlaying,int NbJoueur);
+void mache(parametre &parametr,pomme &pomme,piege &piege);
 
 #endif //UNTITLED5_SNAKEE_HPP
