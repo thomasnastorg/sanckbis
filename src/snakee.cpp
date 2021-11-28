@@ -21,15 +21,7 @@ struct snake2{
 
 void snakee(sf::RenderWindow &window,sf:: Clock &timer,sf::Sound &sound_menu,sf::Sprite &sprite,sf::Texture &back,sf::RectangleShape &player, sf::RectangleShape &player2,sf::Texture &texture,sf::Sprite &pomet,sf::Sprite &pieget,parametre &parametr, pomme &pomme,piege &piege, int &musiqueIsPlaying, int NbJoueur)
 {
-
-
-
-    if (musiqueIsPlaying == 0){
-        sound_menu.play();
-        musiqueIsPlaying = 1;
-    }
-    window.draw(sprite);
-    window.clear();
+  
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
 
         if(parametr.move != 2){
@@ -93,49 +85,59 @@ void snakee(sf::RenderWindow &window,sf:: Clock &timer,sf::Sound &sound_menu,sf:
     if(timer.getElapsedTime().asMilliseconds()>parametr.delai)
     {
         mache( parametr,pomme,piege);
-        for(int i = 1; i<parametr.snaketaille; i++)
-        {
+        for(int i = 1; i<parametr.snaketaille+1 ||  i<parametr.snaketaille2+1; i++)
+	  {
             if(snakes[0].x == snakes[i].x)
-            {
+	      {
                 if(snakes[0].y == snakes[i].y)
-                {
+		  {
                     window.close();
-                }
-            }
+		  }
+	      }
 
             if (snakes[0].x == parametr.Size && snakes[0].y == parametr.Size)
-            {
+	      {
                 window.close();
-            }
+	      }
             if (snakes2[0].x == parametr.Size && snakes2[0].y == parametr.Size)
-            {
+	      {
                 window.close();
-            }
+	      }
+	    
 
 
-
-            if (snakes2[0].x == piege.x && snakes2[0].y == piege.y){
-                parametr.snaketaille2 = parametr.snaketaille2-1;
-                parametr.Score = parametr.Score-20;
-                piege.x=rand()%parametr.Size;
-                piege.y=rand()%parametr.Size;
+            if (snakes2[0].x == piege.x && snakes2[0].y == piege.y)
+            {
+	      parametr.snaketaille2 = parametr.snaketaille2-1;
+	      parametr.Score = parametr.Score-20;
+	      piege.x=rand()%parametr.Size;
+	      piege.y=rand()%parametr.Size;
                 pomme.x=rand()%parametr.Size;
                 pomme.y=rand()%parametr.Size;
-
+		
             }
 
             if (snakes[0].x == piege.x && snakes[0].y == piege.y){
-                parametr.snaketaille = parametr.snaketaille-1;
-                parametr.delai = parametr.delai+4;
-                parametr.Score = parametr.Score-20;
-                piege.x=rand()%parametr.Size;
-                piege.y=rand()%parametr.Size;
-                pomme.x=rand()%parametr.Size;
-                pomme.y=rand()%parametr.Size;
+	      parametr.snaketaille = parametr.snaketaille-1;
+	      parametr.delai = parametr.delai+10;
+	      parametr.Score = parametr.Score-20;
+	      piege.x=rand()%parametr.Size;
+	      piege.y=rand()%parametr.Size;
+	      pomme.x=rand()%parametr.Size;
+	      pomme.y=rand()%parametr.Size;
             }
             timer.restart();
-        }
+	    
+	  }
+        if(parametr.snaketaille <1 && parametr.snaketaille2 <1)
+      {
+	  printf("perdu");
+	  window.close();
+    
+	    }
     }
+
+    if(parametr.snaketaille >1){
     char nb = '0';
     std::string PATH = "../images/animation_backend/retro";
     std::string path;
@@ -154,9 +156,7 @@ void snakee(sf::RenderWindow &window,sf:: Clock &timer,sf::Sound &sound_menu,sf:
         window.draw(sprite);
 
 
-        window.draw(sprite);
-
-
+    }
         for ( int i = 0; i < parametr.snaketaille; i++){
 
             player.setPosition(snakes[i].x*25,snakes[i].y*25);
@@ -175,10 +175,31 @@ void snakee(sf::RenderWindow &window,sf:: Clock &timer,sf::Sound &sound_menu,sf:
         pieget.setPosition(piege.x*25,piege.y*25);
         window.draw(pomet);
         window.draw(pieget);
+
         window.display();
 
+    } else if(parametr.snaketaille <=1) {
+        int nbGo = 0;
+        std::string PATHGO = "../images/game_over/game-over-";
+        std::string pathgo;
+        while (nbGo <= 44) {
+
+            pathgo = PATHGO;
+            pathgo += std::to_string(nbGo);
+            nbGo += 1;
+            pathgo += ".jpg";
+
+            back.loadFromFile(pathgo);
+            sf::Vector2u size = texture.getSize();
+            sprite.setTexture(back);
+            sprite.setOrigin(size.x / 2, size.y / 2);
+            window.clear();
+            window.draw(sprite);
+            window.display();
+        }
     }
 }
+
 
 void mache(parametre &parametr,pomme &pomme,piege &piege){
     for(int i = parametr.snaketaille; i> 0;i--)
@@ -270,3 +291,4 @@ void mache(parametre &parametr,pomme &pomme,piege &piege){
         pomme.y=rand()%parametr.Size;
     }
 }
+
